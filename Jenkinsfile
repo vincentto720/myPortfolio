@@ -1,14 +1,11 @@
 pipeline {
     agent any
     
+    environment {
+        PATH = "/usr/bin:/usr/local/bin:${env.PATH}"
+    }
+    
     stages {
-        stage('Checkout') {
-            steps {
-                echo 'Checking out code...'
-                checkout scm
-            }
-        }
-        
         stage('Build Backend') {
             steps {
                 echo 'Building Backend...'
@@ -30,22 +27,22 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                // Add your test commands here later
+                echo 'Tests would run here'
             }
         }
         
         stage('Build Docker Images') {
             steps {
                 echo 'Building Docker images...'
-                sh 'docker-compose build'
+                sh 'docker compose build'
             }
         }
         
         stage('Deploy') {
             steps {
                 echo 'Deploying application...'
-                sh 'docker-compose down'
-                sh 'docker-compose up -d'
+                sh 'docker compose down || true'
+                sh 'docker compose up -d'
             }
         }
     }
