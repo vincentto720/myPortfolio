@@ -56,10 +56,10 @@ export default function AboutPage() {
                 aspects of software development.
               </p>
               <p className="text-lg text-white leading-relaxed">
-                I recently graduated with a B.S. in Computer Science from CSU Bakersfield (Cum Laude), and
+                I recently graduated with a B.S. in Computer Science from CSU Bakersfield and
                 I've worked on projects involving OCR, neural networks, full-stack web apps, and Spotify
                 API integrations. Whether it's cleaning data, crafting SQL queries, or building interactive
-                UIs, I love bringing ideas to life through code.
+                UIs, I love bringing ideas to life through code. 
               </p>
             </div>
           </div>
