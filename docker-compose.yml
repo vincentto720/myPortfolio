@@ -2,53 +2,59 @@ services:
   backend:
     build: ./backend
     ports:
-      - "5001"  # container port exposed; host port will be dynamically assigned if needed
+      - "5001:5001"
+    # Use variable interpolation from a .env file for the port and other secrets
     environment:
-      - PORT=5001
+      -  PORT=5001
     volumes:
       - ./backend:/app
       - /app/node_modules
     networks:
-      - myportfolio-network
+      - myPortfolio-network
+    restart: unless-stopped # Added restart policy
 
   frontend:
     build: ./frontend
     ports:
-      - "5173"
+      - "5173:5173"
     environment:
-      - VITE_API_URL=http://localhost/api
+      # Changed from 'localhost' to the service name 'nginx' for inter-container comms
+      VITE_API_URL: http://nginx/api
     volumes:
       - ./frontend:/app
       - /app/node_modules
     depends_on:
       - backend
     networks:
-      - myportfolio-network
+      - myPortfolio-network
+    restart: unless-stopped # Added restart policy
 
   nginx:
     build: ./nginx
     ports:
-      - "80"
+      - "80:80"
     depends_on:
       - frontend
       - backend
     networks:
-      - myportfolio-network
+      - myPortfolio-network
+    restart: unless-stopped # Added restart policy
 
   jenkins:
     build: ./jenkins
     user: root
     ports:
-      - "8080"
-      - "50000"
+      - "8080:8080"
+      - "50000:50000"
     volumes:
       - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
-      - myportfolio-network
+      - myPortfolio-network
+    restart: unless-stopped # Added restart policy
 
 networks:
-  myportfolio-network:
+  myPortfolio-network:
     driver: bridge
 
 volumes:
