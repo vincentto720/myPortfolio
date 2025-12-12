@@ -3,6 +3,7 @@ services:
     build: ./backend
     ports:
       - "5001:5001"
+    # Use variable interpolation from a .env file for the port and other secrets
     environment:
       - PORT=5001
     volumes:
@@ -10,13 +11,15 @@ services:
       - /app/node_modules
     networks:
       - myPortfolio-network
+    restart: unless-stopped # Added restart policy
 
   frontend:
     build: ./frontend
     ports:
       - "5173:5173"
     environment:
-      - VITE_API_URL=http://localhost/api
+      # Changed from 'localhost' to the service name 'nginx' for inter-container comms
+      VITE_API_URL: http://nginx/api
     volumes:
       - ./frontend:/app
       - /app/node_modules
@@ -24,6 +27,7 @@ services:
       - backend
     networks:
       - myPortfolio-network
+    restart: unless-stopped # Added restart policy
 
   nginx:
     build: ./nginx
@@ -34,18 +38,20 @@ services:
       - backend
     networks:
       - myPortfolio-network
+    restart: unless-stopped # Added restart policy
 
   jenkins:
     build: ./jenkins
     user: root
     ports:
-      - "8080"
-      - "50000"
+      - "8080:8080"
+      - "50000:50000"
     volumes:
       - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - myPortfolio-network
+    restart: unless-stopped # Added restart policy
 
 networks:
   myPortfolio-network:
