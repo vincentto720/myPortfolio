@@ -1,7 +1,7 @@
 services:
   backend:
     build: ./backend
-    container_name: backend
+    container_name: myPortfolio-backend
     ports:
       - "5001:5001"
     environment:
@@ -10,11 +10,11 @@ services:
       - ./backend:/app
       - /app/node_modules
     networks:
-      - network
+      - myPortfolio-network
 
   frontend:
     build: ./frontend
-    container_name: frontend
+    container_name: myPortfolio-frontend
     ports:
       - "5173:5173"
     environment:
@@ -25,22 +25,22 @@ services:
     depends_on:
       - backend
     networks:
-      - network
+      - myPortfolio-network
 
   nginx:
     build: ./nginx
-    container_name: nginx
+    container_name: myPortfolio-nginx
     ports:
       - "80:80"
     depends_on:
       - frontend
       - backend
     networks:
-      - network
+      - myPortfolio-network
 
   jenkins:
     build: ./jenkins
-    container_name: jenkins
+    container_name: myPortfolio-jenkins
     user: root
     ports:
       - "8080:8080"
@@ -49,11 +49,11 @@ services:
       - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
-      - network
+      - myPortfolio-network
 
 
 networks:
-  network:
+  myPortfolio-network:
     driver: bridge
 
 volumes:
