@@ -1,0 +1,60 @@
+services:
+  backend:
+    build: ./backend
+    container_name: myPortfolio-backend
+    ports:
+      - "5001:5001"
+    environment:
+      - PORT=5001
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - myPortfolio-network
+
+  frontend:
+    build: ./frontend
+    container_name: myPortfolio-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost/api
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - myPortfolio-network
+
+  nginx:
+    build: ./nginx
+    container_name: myPortfolio-nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - myPortfolio-network
+
+  jenkins:
+    build: ./jenkins
+    container_name: myPortfolio-jenkins
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./:/home/jenkins/workspace/project:ro
+    networks:
+      - myPortfolio-network
+
+
+networks:
+  myPortfolio-network:
+    driver: bridge
+
+volumes:
+  jenkins_home:
