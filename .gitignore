@@ -21,3 +21,6 @@ npm-debug.log*
 
 # Jenkins
 jenkins_home/
+
+# Docker
+deploy.sh
