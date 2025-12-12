@@ -2,57 +2,90 @@ pipeline {
     agent any
     
     environment {
-        PATH = "/usr/bin:/usr/local/bin:${env.PATH}"
+        DOCKER_NETWORK = 'myportfolio-network'
     }
     
     stages {
-        stage('Build Backend') {
+        stage('Pull from GitHub') {
             steps {
-                echo 'Building Backend...'
-                dir('backend') {
-                    sh 'npm install'
-                }
+                echo 'Pulling latest code from GitHub...'
+                checkout scm
             }
         }
         
-        stage('Build Frontend') {
+        stage('Stop Old Containers') {
             steps {
-                echo 'Building Frontend...'
-                dir('frontend') {
-                    sh 'npm install'
-                }
+                echo 'Stopping old containers...'
+                sh '''
+                    docker stop backend frontend nginx 2>/dev/null || true
+                    docker rm backend frontend nginx 2>/dev/null || true
+                '''
             }
         }
         
-        stage('Test') {
-            steps {
-                echo 'Running tests...'
-                echo 'Tests would run here'
-            }
-        }
-        
-        stage('Build Docker Images') {
+        stage('Build Images') {
             steps {
                 echo 'Building Docker images...'
-                sh 'docker compose build'
+                sh '''
+                    docker build -t myportfolio-backend:latest ./backend
+                    docker build -t myportfolio-frontend:latest ./frontend
+                    docker build -t myportfolio-nginx:latest ./nginx
+                '''
             }
         }
         
-        stage('Deploy') {
+        stage('Deploy Containers') {
             steps {
-                echo 'Deploying application...'
-                sh 'docker compose down || true'
-                sh 'docker compose up -d'
+                echo 'Deploying containers...'
+                sh '''
+                    # Create network if it doesn't exist
+                    docker network create myportfolio-network 2>/dev/null || true
+                    
+                    # Start backend
+                    docker run -d \
+                      --name backend \
+                      --network myportfolio-network \
+                      -p 3000:3000 \
+                      -e PORT=3000 \
+                      --restart unless-stopped \
+                      myportfolio-backend:latest
+                    
+                    # Start frontend
+                    docker run -d \
+                      --name frontend \
+                      --network myportfolio-network \
+                      -p 5173:5173 \
+                      -e VITE_API_URL=http://nginx/api \
+                      --restart unless-stopped \
+                      myportfolio-frontend:latest
+                    
+                    # Start nginx
+                    docker run -d \
+                      --name nginx \
+                      --network myportfolio-network \
+                      -p 80:80 \
+                      -p 443:443 \
+                      -v /etc/letsencrypt:/etc/letsencrypt:ro \
+                      --restart unless-stopped \
+                      myportfolio-nginx:latest
+                '''
+            }
+        }
+        
+        stage('Verify Deployment') {
+            steps {
+                echo 'Verifying containers are running...'
+                sh 'docker ps --filter "name=backend" --filter "name=frontend" --filter "name=nginx"'
             }
         }
     }
     
     post {
         success {
-            echo 'Pipeline succeeded!'
+            echo 'Deployment completed successfully!'
         }
         failure {
-            echo 'Pipeline failed!'
+            echo 'Deployment failed!'
         }
     }
 }
