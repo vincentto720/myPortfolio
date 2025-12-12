@@ -1,34 +1,179 @@
-import { useState, useEffect } from 'react'
-import './App.css'
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import { motion } from "framer-motion";
+import { FaPython, FaReact, FaPhp, FaHtml5, FaCss3Alt, FaLinux, FaGithub } from "react-icons/fa";
+import { SiMysql, SiMongodb, SiTypescript, SiJavascript, SiMariadb, SiPostgresql, SiCplusplus, SiNumpy, SiPandas, SiScikitlearn, SiSqlite, SiTailwindcss, SiVite, SiNginx, SiNodedotjs, SiAmazon } from "react-icons/si";
+import type { JSX } from "react/jsx-runtime";
 
-function App() {
-  const [message, setMessage] = useState('Loading...')
-  const [health, setHealth] = useState('')
+// Import your page components
+import Home from "./components/home";
+import AboutMe from "./components/aboutMe";
+import Projects from "./components/projects";
+import ContactMe from "./components/contactMe";
 
-  useEffect(() => {
-    // Fetch from backend
-    fetch('http://localhost:5001/api/test')
-      .then(res => res.json())
-      .then(data => setMessage(data.data))
-      .catch(err => setMessage('Error connecting to backend'))
+const skills = [
+  { icon: <SiCplusplus size={200} />, name: "C++" },
+  { icon: <FaPython size={200} />, name: "Python" },
+  { icon: <FaReact size={200} />, name: "React" },
+  { icon: <SiJavascript size={200} />, name: "JavaScript" },
+  { icon: <SiTypescript size={200} />, name: "TypeScript" },
+  { icon: <FaPhp size={200} />, name: "PHP" },
+  { icon: <FaHtml5 size={200} />, name: "HTML" },
+  { icon: <FaCss3Alt size={200} />, name: "CSS" },
+  { icon: <SiMysql size={200} />, name: "MySQL" },
+  { icon: <SiMariadb size={200} />, name: "MariaDB" },
+  { icon: <SiPostgresql size={200} />, name: "PostgreSQL" },
+  { icon: <SiSqlite size={200} />, name: "SQLite" },
+  { icon: <SiMongodb size={200} />, name: "MongoDB" },
+  { icon: <FaLinux size={200} />, name: "Linux" },
+  { icon: <FaGithub size={200} />, name: "GitHub" },
+  { icon: <SiNumpy size={200} />, name: "NumPy" },
+  { icon: <SiPandas size={200} />, name: "Pandas" },
+  { icon: <SiScikitlearn size={200} />, name: "scikit-learn" },
+  { icon: <SiTailwindcss size={200} />, name: "Tailwind CSS" },
+  { icon: <SiVite size={200} />, name: "Vite" },
+  { icon: <SiNginx size={200} />, name: "Nginx" },
+  { icon: <SiNodedotjs size={200} />, name: "Node.js" },
+];
 
-    fetch('http://localhost:5001/api/health')
-      .then(res => res.json())
-      .then(data => setHealth(data.message))
-      .catch(err => console.error(err))
-  }, [])
+type SkillColumnProps = {
+  skills: Array<{ icon: JSX.Element; name: string }>;
+  direction: "down" | "up";
+};
+
+const SkillColumn = ({ skills, direction }: SkillColumnProps) => (
+  <div className="flex flex-col gap-8 overflow-hidden">
+    <motion.div
+      animate={{ y: direction === 'down' ? ['0%', '-50%'] : ['-50%', '0%'] }}
+      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+      className="flex flex-col gap-8"
+    >
+      {[...skills, ...skills].map((skill, i) => (
+        <div key={i} className="flex flex-col items-center opacity-100 hover:opacity-80 transition-opacity">
+          {skill.icon}
+        </div>
+      ))}
+    </motion.div>
+  </div>
+);
+
+export default function App() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Split skills into columns for alternating scroll directions
+  const column1 = skills.filter((_, i) => i % 3 === 0);
+  const column2 = skills.filter((_, i) => i % 3 === 1);
+  const column3 = skills.filter((_, i) => i % 3 === 2);
+
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    setIsMobileMenuOpen(false);
+  };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-md">
-        <h1 className="text-3xl font-bold text-blue-600 mb-4">
-          Fullstack App
-        </h1>
-        <p className="text-gray-700">Backend says: {message}</p>
-        <p className="text-gray-500 text-sm mt-2">Health: {health}</p>
+    <div className="min-h-screen relative overflow-hidden bg-gray-900">
+      {/* Animated Background - Fixed across all sections */}
+      <div className="fixed inset-0 flex justify-around px-8 py-8 pointer-events-none z-0">
+        <SkillColumn skills={column1} direction="down" />
+        <SkillColumn skills={column2} direction="up" />
+        <SkillColumn skills={column3} direction="down" />
       </div>
-    </div>
-  )
-}
 
-export default App
+      {/* Navigation */}
+      <nav className="bg-gradient-to-r from-black to-blue-800 backdrop-blur-md shadow-md fixed w-full top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-16 items-center">
+            <div className="text-xl font-bold text-white">Vincent To</div>
+            
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex space-x-8">
+              <button 
+                onClick={() => scrollToSection('home')} 
+                className="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-blue-600 hover:bg-gray-100 transition-colors"
+              >
+                Home
+              </button>
+              <button 
+                onClick={() => scrollToSection('about')} 
+                className="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-blue-600 hover:bg-gray-100 transition-colors"
+              >
+                About Me
+              </button>
+              <button 
+                onClick={() => scrollToSection('projects')} 
+                className="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-blue-600 hover:bg-gray-100 transition-colors"
+              >
+                Projects
+              </button>
+              <button 
+                onClick={() => scrollToSection('contact')} 
+                className="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-blue-600 hover:bg-gray-100 transition-colors"
+              >
+                Contact
+              </button>
+            </div>
+
+            {/* Mobile Menu Button (Hamburger) */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="p-2 rounded-md text-white hover:bg-gray-100"
+              >
+                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Navigation Menu */}
+          {isMobileMenuOpen && (
+            <div className="md:hidden pb-4 bg-gray-800 backdrop-blur-md rounded-b-lg">
+              <button 
+                onClick={() => scrollToSection('home')} 
+                className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-100"
+              >
+                Home
+              </button>
+              <button 
+                onClick={() => scrollToSection('about')} 
+                className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-100"
+              >
+                About Me
+              </button>
+              <button 
+                onClick={() => scrollToSection('projects')} 
+                className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-100"
+              >
+                Projects
+              </button>
+              <button 
+                onClick={() => scrollToSection('contact')} 
+                className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-100"
+              >
+                Contact
+              </button>
+            </div>
+          )}
+        </div>
+      </nav>
+
+      {/* Main Content - Single page with all sections */}
+      <main className="relative z-10">
+        <section id="home" className="min-h-screen">
+          <Home scrollToSection={scrollToSection} />
+        </section>
+
+        <section id="about" className="min-h-screen">
+          <AboutMe />
+        </section>
+
+        <section id="projects" className="min-h-screen">
+          <Projects />
+        </section>
+
+        <section id="contact" className="min-h-screen">
+          <ContactMe />
+        </section>
+      </main>
+    </div>
+  );
+}
