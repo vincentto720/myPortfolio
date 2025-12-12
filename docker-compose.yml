@@ -46,3 +46,10 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - myPortfolio-network
+
+networks:
+  myPortfolio-network:
+    driver: bridge
+
+volumes:
+  jenkins_home:
