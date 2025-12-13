@@ -24,3 +24,5 @@ jenkins_home/
 
 # Docker
 deploy.sh
+docker-compose.yml
+docker-compose.*.yml
