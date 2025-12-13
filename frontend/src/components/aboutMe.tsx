@@ -50,8 +50,8 @@ export default function AboutPage() {
               </h3>
               <p className="text-lg text-white mb-4 leading-relaxed">
                 I'm a developer who enjoys building applications that feel clean, intuitive, and useful. I love
-                working across the stack—from designing databases to writing front-end interfaces—and
-                I'm always experimenting with new tools that make development smoother and more fun. My 
+                working across the stack—from designing databases to writing front-end interfaces. I'm always 
+                experimenting with new tools that make development smoother and more fun. My 
                 current focus is learning more about the CI/CD pipeline and DevOps practices to streamline
                 deployment processes. I created this portfolio with React, Tailwind CSS, Nginx, Docker, and Jenkins
                 to familarize myself with these technologies. 
