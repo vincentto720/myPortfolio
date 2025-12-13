@@ -25,6 +25,7 @@ function TypingTitles() {
     "Front-End Developer",
     "Back-End Developer",
     "Full-Stack Developer",
+    "Application Developer",
     "Web Developer",
   ];
 
