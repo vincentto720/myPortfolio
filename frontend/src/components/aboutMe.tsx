@@ -9,7 +9,7 @@ export default function AboutPage() {
     "HTML", "CSS", "Tailwind CSS", "React", "Node.js",
     "MySQL", "MariaDB", "PostgreSQL", "MongoDB", "SQLite",
     "Git", "Linux", "macOS", "Windows", "NumPy", "Pandas", "scikit-learn",
-    "Vite", "Nginx", "AWS"
+    "Vite", "Nginx", "AWS", "Docker", "CI/CD Pipelines", "Jenkins"
   ];
 
   return (
