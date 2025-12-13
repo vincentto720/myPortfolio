@@ -3,6 +3,7 @@ pipeline {
     
     environment {
         DOCKER_NETWORK = 'myportfolio-network'
+        INFRASTRUCTURE_PATH = '/var/jenkins_home/workspace/infrastructure'
     }
     
     stages {
@@ -29,7 +30,7 @@ pipeline {
                 sh '''
                     docker build -t myportfolio-backend:latest ./backend
                     docker build -t myportfolio-frontend:latest ./frontend
-                    docker build -t myportfolio-nginx:latest ./nginx
+                    docker build -t myportfolio-nginx:latest /home/ec2-user/infrastructure/nginx
                 '''
             }
         }
