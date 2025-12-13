@@ -49,11 +49,12 @@ export default function AboutPage() {
                 Vincent Z. To
               </h3>
               <p className="text-lg text-white mb-4 leading-relaxed">
-                I'm a developer who enjoys building things that feel clean, intuitive, and useful. I love
+                I'm a developer who enjoys building applications that feel clean, intuitive, and useful. I love
                 working across the stack—from designing databases to writing front-end interfaces—and
                 I'm always experimenting with new tools that make development smoother and more fun. My 
-                main focus is data science and database systems right now, but I'm passionate about all
-                aspects of software development.
+                current focus is learning more about the CI/CD pipeline and DevOps practices to streamline
+                deployment processes. I created this portfolio with React, Tailwind CSS, Nginx, Docker, and Jenkins
+                to familarize myself with these technologies. 
               </p>
               <p className="text-lg text-white leading-relaxed">
                 I recently graduated with a B.S. in Computer Science from CSU Bakersfield and
