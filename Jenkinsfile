@@ -3,7 +3,6 @@ pipeline {
     
     environment {
         DOCKER_NETWORK = 'myportfolio-network'
-        INFRASTRUCTURE_PATH = '/var/jenkins_home/workspace/infrastructure'
     }
     
     stages {
