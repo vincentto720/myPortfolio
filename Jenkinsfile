@@ -27,8 +27,8 @@ pipeline {
             steps {
                 echo 'Building Docker images...'
                 sh '''
-                    docker build -t myportfolio-backend:latest ./backend
-                    docker build -t myportfolio-frontend:latest ./frontend
+                    docker build --no-cache -t myportfolio-backend:latest ./backend
+                    docker build --no-cache -t myportfolio-frontend:latest ./frontend
                     docker build -t myportfolio-nginx:latest /home/ec2-user/infrastructure/nginx
                 '''
             }
