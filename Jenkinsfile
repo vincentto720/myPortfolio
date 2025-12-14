@@ -28,7 +28,7 @@ pipeline {
                 echo 'Building Docker images...'
                 sh '''
                     docker build --no-cache -f frontend/Dockerfile.prod -t myportfolio-frontend:latest ./frontend
-                    docker build --no-cache  -f backend/Dockerfile.prod -t myportfolio-backend:latest ./backend
+                    docker build --no-cache  -f backend/Dockerfile -t myportfolio-backend:latest ./backend
                     docker build -t myportfolio-nginx:latest /home/ec2-user/infrastructure/nginx
                 '''
             }
