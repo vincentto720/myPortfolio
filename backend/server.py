@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 import boto3
 from botocore.exceptions import ClientError
+import botocore
 
 # Load environment variables
 load_dotenv()
@@ -20,6 +21,15 @@ AWS_REGION = os.getenv('AWS_REGION', 'us-west-1')
 SES_SENDER_EMAIL = os.getenv('SES_SENDER_EMAIL')
 RECIPIENT_EMAIL = os.getenv('RECIPIENT_EMAIL')
 ENV = os.getenv("FLASK_ENV", "production")
+
+# override metadata endpoint for Docker
+session = boto3.Session(
+    botocore_config=botocore.config.Config(
+        metadata_service_timeout=1,
+        metadata_service_num_attempts=1,
+        metadata_service_endpoint='http://host.docker.internal/latest/meta-data/'
+    )
+)
 
 # Initialize SES client
 # When running on EC2 with IAM role, boto3 automatically uses the role
