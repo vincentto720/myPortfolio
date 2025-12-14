@@ -16,7 +16,7 @@ app = Flask(__name__)
 CORS(app)
 
 # AWS SES configuration
-AWS_REGION = os.getenv('AWS_REGION', 'us-east-1')
+AWS_REGION = os.getenv('AWS_REGION', 'us-west-1')
 SES_SENDER_EMAIL = os.getenv('SES_SENDER_EMAIL')
 RECIPIENT_EMAIL = os.getenv('RECIPIENT_EMAIL')
 
