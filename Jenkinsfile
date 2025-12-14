@@ -44,7 +44,7 @@ pipeline {
                     # Start backend
                     docker run -d \
                       --name backend \
-                      --network host \
+                      --network myportfolio-network \
                       -p 3000:3000 \
                       -e PORT=3000 \
                       --restart unless-stopped \
