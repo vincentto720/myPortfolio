@@ -21,7 +21,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.prod
     ports:
-      - "5173:5173"
+      - "80:80"
     environment:
       # Changed from 'localhost' to the service name 'nginx' for inter-container comms
       VITE_API_URL: http://nginx/api
