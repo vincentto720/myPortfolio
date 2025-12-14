@@ -19,6 +19,7 @@ CORS(app)
 AWS_REGION = os.getenv('AWS_REGION', 'us-west-1')
 SES_SENDER_EMAIL = os.getenv('SES_SENDER_EMAIL')
 RECIPIENT_EMAIL = os.getenv('RECIPIENT_EMAIL')
+ENV = os.getenv("FLASK_ENV", "production")
 
 # Initialize SES client
 # When running on EC2 with IAM role, boto3 automatically uses the role
@@ -162,5 +163,5 @@ if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
         port=port,
-        debug=debug_mode
+        debug=(ENV == "development")
     )
