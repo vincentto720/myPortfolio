@@ -16,7 +16,7 @@ export default function ContactPage() {
     setSubmitStatus({ type: null, message: '' });
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
       
       const response = await fetch(`${API_URL}/api/email/send`, {
         method: 'POST',
