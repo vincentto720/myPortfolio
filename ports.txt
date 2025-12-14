@@ -1,3 +1,0 @@
-frontend - 5173
-backend - 3000
-nginx - 8080
