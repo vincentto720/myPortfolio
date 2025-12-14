@@ -22,15 +22,6 @@ SES_SENDER_EMAIL = os.getenv('SES_SENDER_EMAIL')
 RECIPIENT_EMAIL = os.getenv('RECIPIENT_EMAIL')
 ENV = os.getenv("FLASK_ENV", "production")
 
-# override metadata endpoint for Docker
-session = boto3.Session(
-    botocore_config=botocore.config.Config(
-        metadata_service_timeout=1,
-        metadata_service_num_attempts=1,
-        metadata_service_endpoint='http://host.docker.internal/latest/meta-data/'
-    )
-)
-
 # Initialize SES client
 # When running on EC2 with IAM role, boto3 automatically uses the role
 # When running locally, it will look for credentials in environment or ~/.aws/credentials

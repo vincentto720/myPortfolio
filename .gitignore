@@ -4,13 +4,21 @@ node_modules/
 
 # Environment variables
 .env
+.env.local
+.env.production
 */.env
+*/.env.local
+*/.env.production
 
-# Build outputs
-dist/
-build/
-*/dist/
-*/build/
+# Python
+backend/__pycache__/
+backend/**/__pycache__/
+backend/*.pyc
+backend/**/*.pyc
+backend/*.pyo
+backend/**/*.pyo
+backend/venv/
+backend/env/
 
 # Logs
 *.log
@@ -18,14 +26,27 @@ npm-debug.log*
 
 # OS files
 .DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
 
 # Jenkins
 jenkins_home/
+
+# Build outputs
+frontend/dist/
+backend/dist/
+
+# Sensitive files
+*.pem
+*.key
+.aws/
 
 # Docker
 deploy.sh
 docker-compose.yml
 docker-compose.*.yml
-
-#ports
-ports.txt
