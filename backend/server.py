@@ -152,7 +152,7 @@ Reply to: {email}
 
 # Run the application
 if __name__ == '__main__':
-    port = int(os.getenv('PORT', 5000))
+    port = int(os.getenv('PORT', 3000))
     debug_mode = os.getenv('FLASK_ENV', 'development') == 'development'
     
     print(f"Starting Flask server on port {port}")
