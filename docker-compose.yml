@@ -1,17 +1,20 @@
 services:
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    # Use variable interpolation from a .env file for the port and other secrets
     environment:
-      -  PORT=3000
+      - PORT=3000
+      - FLASK_ENV=development
     volumes:
       - ./backend:/app
-      - /app/node_modules
+    env_file:
+      - ./backend/.env
     networks:
       - myPortfolio-network
-    restart: unless-stopped # Added restart policy
+    restart: unless-stopped
 
   frontend:
     build: ./frontend

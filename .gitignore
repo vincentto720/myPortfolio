@@ -26,3 +26,6 @@ jenkins_home/
 deploy.sh
 docker-compose.yml
 docker-compose.*.yml
+
+#ports
+ports.txt
