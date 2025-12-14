@@ -54,7 +54,6 @@ pipeline {
                     docker run -d \
                       --name frontend \
                       --network myportfolio-network \
-                      -p 5173:5173 \
                       -e VITE_API_URL=http://nginx/api \
                       --restart unless-stopped \
                       myportfolio-frontend:latest

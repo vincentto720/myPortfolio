@@ -47,3 +47,4 @@ backend/dist/
 deploy.sh
 docker-compose.yml
 docker-compose.*.yml
+frontend/Dockerfile
