@@ -30,7 +30,7 @@ services:
     restart: unless-stopped # Added restart policy
 
   nginx:
-    build: ./nginx
+    build: ../infrastructure/nginx
     ports:
       - "80:80"
     depends_on:
