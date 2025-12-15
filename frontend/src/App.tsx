@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
-import { FaPython, FaReact, FaPhp, FaHtml5, FaCss3Alt, FaLinux, FaGithub } from "react-icons/fa";
-import { SiMysql, SiMongodb, SiTypescript, SiJavascript, SiMariadb, SiPostgresql, SiCplusplus, SiNumpy, SiPandas, SiScikitlearn, SiSqlite, SiTailwindcss, SiVite, SiNginx, SiNodedotjs, SiAmazon } from "react-icons/si";
 import type { JSX } from "react/jsx-runtime";
 
 // Import your page components
@@ -10,31 +8,7 @@ import Home from "./components/home";
 import AboutMe from "./components/aboutMe";
 import Projects from "./components/projects";
 import ContactMe from "./components/contactMe";
-
-const skills = [
-  { icon: <SiCplusplus size={200} />, name: "C++" },
-  { icon: <FaPython size={200} />, name: "Python" },
-  { icon: <FaReact size={200} />, name: "React" },
-  { icon: <SiJavascript size={200} />, name: "JavaScript" },
-  { icon: <SiTypescript size={200} />, name: "TypeScript" },
-  { icon: <FaPhp size={200} />, name: "PHP" },
-  { icon: <FaHtml5 size={200} />, name: "HTML" },
-  { icon: <FaCss3Alt size={200} />, name: "CSS" },
-  { icon: <SiMysql size={200} />, name: "MySQL" },
-  { icon: <SiMariadb size={200} />, name: "MariaDB" },
-  { icon: <SiPostgresql size={200} />, name: "PostgreSQL" },
-  { icon: <SiSqlite size={200} />, name: "SQLite" },
-  { icon: <SiMongodb size={200} />, name: "MongoDB" },
-  { icon: <FaLinux size={200} />, name: "Linux" },
-  { icon: <FaGithub size={200} />, name: "GitHub" },
-  { icon: <SiNumpy size={200} />, name: "NumPy" },
-  { icon: <SiPandas size={200} />, name: "Pandas" },
-  { icon: <SiScikitlearn size={200} />, name: "scikit-learn" },
-  { icon: <SiTailwindcss size={200} />, name: "Tailwind CSS" },
-  { icon: <SiVite size={200} />, name: "Vite" },
-  { icon: <SiNginx size={200} />, name: "Nginx" },
-  { icon: <SiNodedotjs size={200} />, name: "Node.js" },
-];
+import { skills } from "./components/skills";
 
 type SkillColumnProps = {
   skills: Array<{ icon: JSX.Element; name: string }>;
